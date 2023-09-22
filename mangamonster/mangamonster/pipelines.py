@@ -8,6 +8,6 @@
 from itemadapter import ItemAdapter
 
 
-class MangamonsterPipeline:
+class MangaPipeline:
     def process_item(self, item, spider):
         return item

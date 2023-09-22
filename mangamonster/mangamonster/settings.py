@@ -93,7 +93,10 @@ TWISTED_REACTOR = "twisted.internet.asyncioreactor.AsyncioSelectorReactor"
 FEED_EXPORT_ENCODING = "utf-8"
 
 
-MYSQL_DB_NAME = 'mangamonster_com'
-MYSQL_HOST = 'y5.78.77.71'
-MYSQL_USER = 'bgudb'
-MYSQL_PASSWORD = 'Bg2023!m1'
+# DATABASE CONFIG
+DBUSERNAME = 'bgudb'
+DBPASSWORD = 'Bg2023!m1'
+DBHOST = '5.78.77.71'
+DBPORT = 3306
+DBNAME = 'mangamonster_com'
+
