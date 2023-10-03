@@ -63,7 +63,7 @@ CONCURRENT_REQUESTS = 32
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-   "mangamonster.pipelines.MangamonsterPipeline": 300,
+   "mangamonster.pipelines.MangaPipeline": 300,
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)
