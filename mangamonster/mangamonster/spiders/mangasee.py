@@ -73,9 +73,8 @@ class MangaseeSpider(scrapy.Spider):
                 'chapter_info': chapter_info,
             })
         manga['all_chapter_info'] = manga_chapter_info
-        with open(f"mangasee_json/{index_name}.json", "w") as file:
-            json.dump(manga, file)
-        logger.info()
-
+        logger.info(manga)
+        base_crawler.write_json_file(index_name=index_name, data=manga)
+        
 
         
