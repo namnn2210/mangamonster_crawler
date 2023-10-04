@@ -2,12 +2,11 @@ import scrapy
 import re
 import json
 from . import base_crawler
+from loguru import logger
 
-def extract_script(response):
-    return response.css('script')[-1].get()
 
 def get_list_chapters(response):
-    manga_script = extract_script(response)
+    manga_script = base_crawler.extract_script_scrapy(response)
     regex = r'vm.Chapters\s=\s.{0,};'
     match = re.search(regex, manga_script)
     if match:
@@ -19,21 +18,9 @@ def get_list_chapters(response):
         return list_chapters
     else:
         return None
-    
-def chapter_encode(chapter_string):
-    index = ''
-    index_string = chapter_string[0:1]
-    if index_string != '1':
-        index = '-index-{}'.format(index_string)
-    chapter = int(chapter_string[1:-1])
-    odd = ''
-    odd_string = chapter_string[len(chapter_string) - 1]
-    if odd_string != '0':
-        odd = '.{}'.format(odd_string)
-    return '-chapter-{}{}{}'.format(chapter, odd, index)
 
 def get_chapter_info(chapter_url):
-    chapter_script = base_crawler.extract_script(chapter_url)
+    chapter_script = base_crawler.extract_script_scrapy(chapter_url)
     chapter_regex = r'vm.CurChapter\s=\s.{0,};'
     chapter_source_regex = r'vm.CurPathName\s=\s.{0,};'
     index_name_regex = r'vm.IndexName\s=\s.{0,};'
@@ -58,7 +45,7 @@ class MangaseeSpider(scrapy.Spider):
     start_urls = ["https://mangasee123.com/search/"]
 
     def parse(self, response):
-        script = extract_script(response)
+        script = base_crawler.extract_script_scrapy(response)
         regex = r'vm.Directory\s=\s.{0,};'
         manga_str = re.search(regex, script).group()
         list_mangas_string = manga_str.replace('vm.Directory = ', '').replace(';', '')
@@ -78,7 +65,7 @@ class MangaseeSpider(scrapy.Spider):
             if not chapter.endswith('}'):
                 chapter += '}'
             chapter_json = json.loads(chapter)
-            chapter_encoded = chapter_encode(chapter_json['Chapter'])
+            chapter_encoded = base_crawler.chapter_encode(chapter_json['Chapter'])
             chapter_url = f'https://mangasee123.com/read-online/{index_name}{chapter_encoded}-page-1.html'
             chapter_source, chapter_info, _ = get_chapter_info(chapter_url)
             manga_chapter_info.append({
@@ -88,6 +75,7 @@ class MangaseeSpider(scrapy.Spider):
         manga['all_chapter_info'] = manga_chapter_info
         with open(f"mangasee_json/{index_name}.json", "w") as file:
             json.dump(manga, file)
+        logger.info()
 
 
         
