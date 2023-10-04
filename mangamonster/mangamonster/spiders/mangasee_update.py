@@ -38,4 +38,6 @@ class MangaseeUpdateSpider(scrapy.Spider):
                 all_chapter_info.append(new_chapter)
                 data['all_chapter_info'] = all_chapter_info
                 base_crawler.write_json_file(index_name=index_name, data=data)
+            else:
+                logger.info("UP TO DATE")
                 
