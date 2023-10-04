@@ -1,0 +1,1 @@
+MANGASEE_JSON = '/home/bidgear/python/mangastories_crawler/mangasee_json'

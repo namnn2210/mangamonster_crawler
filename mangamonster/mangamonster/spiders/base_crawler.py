@@ -3,6 +3,8 @@ from urllib.request import Request, urlopen
 
 import re
 import json
+import os
+import constant
 
 def get_soup(url):
     return BeautifulSoup(urlopen(Request(url=url, headers={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36', 'Cookie':'PHPSESSID=bh09hfshmt9fhnqkmkg2v3rflj; _ga=GA1.2.459389766.1692582622; _gid=GA1.2.2016220288.1692582622; _ga_5HPMBJPE7W=GS1.2.1692582622.1.0.1692582622.0.0.0'})),
@@ -48,12 +50,12 @@ def get_chapter_info(response):
 
 def read_json_file(index_name):
     try:
-        with open(f'mangasee_json/{index_name}.json','r') as file:
+        with open(os.path.join(constant.MANGASEE_JSON,f'{index_name}.json'),'r') as file:
             data = json.load(file)
         return data
     except Exception as ex:
         return None
 
 def write_json_file(index_name, data):
-    with open(f'mangasee_json/{index_name}.json','w') as file:
+    with open(os.path.join(constant.MANGASEE_JSON,f'{index_name}.json'),'w') as file:
         json.dump(data, file)
