@@ -20,7 +20,7 @@ def get_list_chapters(response):
         return None
 
 def get_chapter_info(chapter_url):
-    chapter_script = base_crawler.extract_script_scrapy(chapter_url)
+    chapter_script = base_crawler.extract_script_bs4(chapter_url)
     chapter_regex = r'vm.CurChapter\s=\s.{0,};'
     chapter_source_regex = r'vm.CurPathName\s=\s.{0,};'
     index_name_regex = r'vm.IndexName\s=\s.{0,};'
